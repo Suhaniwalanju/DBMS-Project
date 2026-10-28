@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { api } from "../services/api";
 
-export default function POSBilling({ onSaleCompleted }) {
+export default function POSBilling({ onSaleCompleted, dataVersion }) {
   const [medicines, setMedicines] = useState([]);
   const [categories, setCategories] = useState([]);
   const [customers, setCustomers] = useState([]);
@@ -37,7 +37,7 @@ export default function POSBilling({ onSaleCompleted }) {
 
   useEffect(() => {
     loadData();
-  }, [search, selectedCategory]);
+  }, [search, selectedCategory, dataVersion]);
 
   const loadData = async () => {
     setLoading(true);
@@ -394,7 +394,7 @@ export default function POSBilling({ onSaleCompleted }) {
               justifyContent: "space-between",
               fontSize: "1.25rem",
               fontWeight: "800",
-              color: "#f8fafc",
+              color: "var(--text-main)",
               borderTop: "1px solid var(--border-subtle)",
               paddingTop: "8px"
             }}>

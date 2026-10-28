@@ -27,8 +27,8 @@ export default function InvoiceModal({ sale, onClose }) {
         <div className="receipt-paper" id="printable-receipt" style={{ marginBottom: "20px" }}>
           <div style={{ textAlign: "center", borderBottom: "2px dashed #cbd5e1", paddingBottom: "12px", marginBottom: "16px" }}>
             <h2 style={{ fontSize: "1.4rem", fontWeight: "800", color: "#0f172a", margin: "0" }}>PHARMACARE</h2>
-            <p style={{ fontSize: "0.8rem", color: "#475569" }}>Licensed Retail Pharmacy & Healthcare</p>
-            <p style={{ fontSize: "0.75rem", color: "#64748b" }}>Tel: (800) 555-PHARMA | Tax ID: US-994821</p>
+            <p style={{ fontSize: "0.8rem", color: "#475569" }}>Licensed Retail Pharmacy & Healthcare Chemist</p>
+            <p style={{ fontSize: "0.75rem", color: "#64748b" }}>Tel: +91 98200-PHARMA | GSTIN: 27AABCP1234F1Z5</p>
           </div>
 
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.82rem", color: "#334155", marginBottom: "14px" }}>

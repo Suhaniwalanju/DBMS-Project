@@ -41,7 +41,7 @@
   --bg-surface: #ffffff;
   --bg-surface-hover: #f1f5f9;
   --bg-card: #ffffff;
-  --border-subtle: rgba(0, 0, 0, 0.09);
+  --border-subtle: rgba(0, 0, 0, 0.12);
   --border-focus: #0284c7;
 
   --primary: #0284c7;
@@ -57,9 +57,9 @@
   --accent-rose-glow: rgba(225, 29, 72, 0.15);
   --accent-purple: #7c3aed;
 
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-dim: #64748b;
+  --text-main: #090d16;
+  --text-muted: #2d3748;
+  --text-dim: #4a5568;
 
   --shadow-card: 0 4px 20px 0 rgba(0, 0, 0, 0.06);
   --shadow-glow: 0 0 15px rgba(2, 132, 199, 0.12);

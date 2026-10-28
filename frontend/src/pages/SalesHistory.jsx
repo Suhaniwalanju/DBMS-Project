@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Search, Receipt, Printer, ExternalLink, Calendar } from "lucide-react";
 import { api } from "../services/api";
 
-export default function SalesHistory({ onOpenInvoice }) {
+export default function SalesHistory({ onOpenInvoice, dataVersion }) {
   const [sales, setSales] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadSales();
-  }, []);
+  }, [dataVersion]);
 
   const loadSales = async () => {
     setLoading(true);
@@ -90,7 +90,7 @@ export default function SalesHistory({ onOpenInvoice }) {
                       </div>
                     </td>
                     <td>
-                      <div style={{ fontWeight: "600", color: "#f8fafc" }}>{sale.customer_name}</div>
+                      <div style={{ fontWeight: "600", color: "var(--text-main)" }}>{sale.customer_name}</div>
                     </td>
                     <td>
                       <span className="badge" style={{ background: "rgba(14, 165, 233, 0.15)", color: "#38bdf8", border: "1px solid rgba(14, 165, 233, 0.3)" }}>

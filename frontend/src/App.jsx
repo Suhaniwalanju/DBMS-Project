@@ -33,6 +33,13 @@ export default function App() {
 
   const [activeInvoice, setActiveInvoice] = useState(null);
 
+  const [dataVersion, setDataVersion] = useState(0);
+
+  const refreshAll = () => {
+    fetchStats();
+    setDataVersion((v) => v + 1);
+  };
+
   useEffect(() => {
     fetchStats();
   }, [currentTab]);
@@ -57,7 +64,7 @@ export default function App() {
   };
 
   const handleSaleCompleted = (completedSale) => {
-    fetchStats();
+    refreshAll();
     setActiveInvoice(completedSale);
   };
 
@@ -85,7 +92,7 @@ export default function App() {
           currentTab={currentTab}
           onOpenAddMedicine={handleOpenAddMedicine}
           onQuickSale={() => setCurrentTab("pos")}
-          onRefresh={fetchStats}
+          onRefresh={refreshAll}
           theme={theme}
           onToggleTheme={toggleTheme}
         />
@@ -96,12 +103,14 @@ export default function App() {
               stats={stats}
               onNavigate={setCurrentTab}
               onOpenInvoice={handleOpenInvoiceById}
+              dataVersion={dataVersion}
             />
           )}
 
           {currentTab === "pos" && (
             <POSBilling
               onSaleCompleted={handleSaleCompleted}
+              dataVersion={dataVersion}
             />
           )}
 
@@ -109,6 +118,7 @@ export default function App() {
             <Inventory
               onOpenAddModal={handleOpenAddMedicine}
               onEditMedicine={handleEditMedicine}
+              dataVersion={dataVersion}
             />
           )}
 
@@ -116,17 +126,22 @@ export default function App() {
             <Alerts
               onEditMedicine={handleEditMedicine}
               onOpenAddModal={handleOpenAddMedicine}
+              dataVersion={dataVersion}
             />
           )}
 
           {currentTab === "sales" && (
             <SalesHistory
               onOpenInvoice={handleOpenInvoiceById}
+              dataVersion={dataVersion}
             />
           )}
 
           {currentTab === "suppliers" && (
-            <Suppliers />
+            <Suppliers
+              onDataChanged={refreshAll}
+              dataVersion={dataVersion}
+            />
           )}
         </main>
       </div>
@@ -136,7 +151,7 @@ export default function App() {
         isOpen={isAddModalOpen}
         initialData={editingMedicine}
         onClose={() => setIsAddModalOpen(false)}
-        onSaved={fetchStats}
+        onSaved={refreshAll}
       />
 
       {/* Invoice Receipt Modal */}

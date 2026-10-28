@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { api } from "../services/api";
 
-export default function Inventory({ onOpenAddModal, onEditMedicine }) {
+export default function Inventory({ onOpenAddModal, onEditMedicine, dataVersion }) {
   const [medicines, setMedicines] = useState([]);
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
@@ -23,7 +23,7 @@ export default function Inventory({ onOpenAddModal, onEditMedicine }) {
 
   useEffect(() => {
     loadInventory();
-  }, [search, selectedCategory, selectedStatus]);
+  }, [search, selectedCategory, selectedStatus, dataVersion]);
 
   const loadInventory = async () => {
     setLoading(true);
@@ -148,7 +148,7 @@ export default function Inventory({ onOpenAddModal, onEditMedicine }) {
                 medicines.map((med) => (
                   <tr key={med.medicine_id}>
                     <td>
-                      <div style={{ fontWeight: "600", color: "#f8fafc" }}>{med.name}</div>
+                      <div style={{ fontWeight: "600", color: "var(--text-main)" }}>{med.name}</div>
                       <div style={{ fontSize: "0.76rem", color: "#94a3b8" }}>{med.generic_name || "N/A"}</div>
                     </td>
                     <td>

@@ -11,14 +11,14 @@ import {
 } from "lucide-react";
 import { api } from "../services/api";
 
-export default function Alerts({ onEditMedicine, onOpenAddModal }) {
+export default function Alerts({ onEditMedicine, onOpenAddModal, dataVersion }) {
   const [lowStockMeds, setLowStockMeds] = useState([]);
   const [expiringMeds, setExpiringMeds] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadAlerts();
-  }, []);
+  }, [dataVersion]);
 
   const loadAlerts = async () => {
     setLoading(true);
@@ -61,7 +61,7 @@ export default function Alerts({ onEditMedicine, onOpenAddModal }) {
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <ShieldAlert size={32} color="#fb7185" />
           <div>
-            <h3 style={{ fontSize: "1.1rem", fontWeight: "700", color: "#f8fafc" }}>
+            <h3 style={{ fontSize: "1.1rem", fontWeight: "700", color: "var(--text-main)" }}>
               Pharmaceutical Safety & Expiration Guard
             </h3>
             <p style={{ fontSize: "0.82rem", color: "#94a3b8" }}>
@@ -107,7 +107,7 @@ export default function Alerts({ onEditMedicine, onOpenAddModal }) {
                   }}
                 >
                   <div>
-                    <div style={{ fontWeight: "600", fontSize: "0.92rem", color: "#f8fafc" }}>{med.name}</div>
+                    <div style={{ fontWeight: "600", fontSize: "0.92rem", color: "var(--text-main)" }}>{med.name}</div>
                     <div style={{ fontSize: "0.78rem", color: "#94a3b8" }}>
                       Category: {med.category_name || "General"} • Batch: {med.batch_number}
                     </div>
@@ -171,7 +171,7 @@ export default function Alerts({ onEditMedicine, onOpenAddModal }) {
                   >
                     <div>
                       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <span style={{ fontWeight: "600", fontSize: "0.92rem", color: "#f8fafc" }}>{med.name}</span>
+                        <span style={{ fontWeight: "600", fontSize: "0.92rem", color: "var(--text-main)" }}>{med.name}</span>
                         <span className={`badge badge-${med.status}`}>
                           {isPast ? "Expired" : "Expiring Soon"}
                         </span>

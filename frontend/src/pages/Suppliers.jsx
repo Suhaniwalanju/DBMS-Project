@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Building2, Phone, Mail, MapPin, Tag, Plus, Trash2 } from "lucide-react";
 import { api } from "../services/api";
 
-export default function Suppliers() {
+export default function Suppliers({ onDataChanged, dataVersion }) {
   const [suppliers, setSuppliers] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ export default function Suppliers() {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [dataVersion]);
 
   const loadData = async () => {
     setLoading(true);
@@ -39,6 +39,7 @@ export default function Suppliers() {
       setShowSupplierModal(false);
       setSupForm({ name: "", contact_person: "", phone: "", email: "", address: "" });
       loadData();
+      if (onDataChanged) onDataChanged();
     } catch (err) {
       alert("Failed to add supplier: " + err.message);
     }
@@ -51,6 +52,7 @@ export default function Suppliers() {
       setShowCategoryModal(false);
       setCatForm({ name: "", description: "" });
       loadData();
+      if (onDataChanged) onDataChanged();
     } catch (err) {
       alert("Failed to add category: " + err.message);
     }
@@ -85,27 +87,27 @@ export default function Suppliers() {
                 gap: "10px",
               }}
             >
-              <div style={{ fontWeight: "700", fontSize: "1rem", color: "#f8fafc" }}>{sup.name}</div>
-              <div style={{ fontSize: "0.82rem", color: "#38bdf8", fontWeight: "600" }}>
+              <div style={{ fontWeight: "700", fontSize: "1.05rem", color: "var(--text-main)" }}>{sup.name}</div>
+              <div style={{ fontSize: "0.82rem", color: "var(--primary)", fontWeight: "600" }}>
                 Rep: {sup.contact_person || "General Accounts"}
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "6px", fontSize: "0.8rem", color: "#94a3b8" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px", fontSize: "0.82rem", color: "var(--text-muted)" }}>
                 {sup.phone && (
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <Phone size={14} color="#64748b" />
+                    <Phone size={14} color="var(--primary)" />
                     <span>{sup.phone}</span>
                   </div>
                 )}
                 {sup.email && (
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <Mail size={14} color="#64748b" />
+                    <Mail size={14} color="var(--primary)" />
                     <span>{sup.email}</span>
                   </div>
                 )}
                 {sup.address && (
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <MapPin size={14} color="#64748b" />
+                    <MapPin size={14} color="var(--primary)" />
                     <span>{sup.address}</span>
                   </div>
                 )}
@@ -139,10 +141,10 @@ export default function Suppliers() {
                 padding: "16px",
               }}
             >
-              <div style={{ fontWeight: "600", fontSize: "0.95rem", color: "#f8fafc", marginBottom: "4px" }}>
+              <div style={{ fontWeight: "600", fontSize: "0.95rem", color: "var(--text-main)", marginBottom: "4px" }}>
                 {cat.name}
               </div>
-              <p style={{ fontSize: "0.78rem", color: "#94a3b8" }}>
+              <p style={{ fontSize: "0.82rem", color: "var(--text-muted)", lineHeight: "1.45" }}>
                 {cat.description || "No description provided."}
               </p>
             </div>

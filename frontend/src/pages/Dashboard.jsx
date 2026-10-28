@@ -15,14 +15,14 @@ import {
 import StatCard from "../components/StatCard";
 import { api } from "../services/api";
 
-export default function Dashboard({ stats, onNavigate, onOpenInvoice }) {
+export default function Dashboard({ stats, onNavigate, onOpenInvoice, dataVersion }) {
   const [recentSales, setRecentSales] = useState([]);
   const [criticalAlerts, setCriticalAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadDashboardDetails();
-  }, []);
+  }, [dataVersion]);
 
   const loadDashboardDetails = async () => {
     setLoading(true);
