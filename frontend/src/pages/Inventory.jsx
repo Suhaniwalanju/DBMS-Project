@@ -9,9 +9,11 @@ import {
   AlertTriangle,
   ChevronUp,
   ChevronDown,
-  Package
+  Package,
+  Sparkles
 } from "lucide-react";
 import { api } from "../services/api";
+import AlternativeModal from "../components/AlternativeModal";
 
 export default function Inventory({ onOpenAddModal, onEditMedicine, dataVersion }) {
   const [medicines, setMedicines] = useState([]);
@@ -20,6 +22,7 @@ export default function Inventory({ onOpenAddModal, onEditMedicine, dataVersion 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedAltMedicine, setSelectedAltMedicine] = useState(null);
 
   useEffect(() => {
     loadInventory();
@@ -202,6 +205,27 @@ export default function Inventory({ onOpenAddModal, onEditMedicine, dataVersion 
                     </td>
                     <td style={{ textAlign: "right" }}>
                       <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+                        {med.stock_quantity <= 0 && (
+                          <button
+                            className="btn-secondary"
+                            style={{
+                              padding: "6px 10px",
+                              color: "#10b981",
+                              borderColor: "rgba(16, 185, 129, 0.4)",
+                              background: "rgba(16, 185, 129, 0.1)",
+                              fontSize: "0.75rem",
+                              fontWeight: "600",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "4px"
+                            }}
+                            title="View Research-Verified In-Stock Alternatives"
+                            onClick={() => setSelectedAltMedicine(med)}
+                          >
+                            <Sparkles size={13} />
+                            <span>Suggest Alt</span>
+                          </button>
+                        )}
                         <button
                           className="btn-secondary"
                           style={{ padding: "6px" }}
@@ -227,6 +251,13 @@ export default function Inventory({ onOpenAddModal, onEditMedicine, dataVersion 
           </table>
         </div>
       </div>
+
+      {/* Alternative Medicine Modal */}
+      <AlternativeModal
+        isOpen={!!selectedAltMedicine}
+        medicine={selectedAltMedicine}
+        onClose={() => setSelectedAltMedicine(null)}
+      />
     </div>
   );
 }

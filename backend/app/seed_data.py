@@ -260,6 +260,30 @@ def seed_database(force_refresh: bool = False):
             "cost_price": Decimal("46.00"),
             "stock_quantity": 45,
             "reorder_level": 10,
+        },
+        {
+            "name": "Calpol 650mg Tablet",
+            "generic_name": "Paracetamol 650mg",
+            "category_name": "Analgesics & Antipyretics (Pain & Fever)",
+            "supplier_index": 0,  # Sun Pharma
+            "batch_number": "CAL-11094",
+            "expiry_date": today + timedelta(days=365),
+            "unit_price": Decimal("33.00"),
+            "cost_price": Decimal("21.00"),
+            "stock_quantity": 0,  # ⚠️ Out of stock to test alternative suggestion!
+            "reorder_level": 20,
+        },
+        {
+            "name": "Moxikind-CV 625 Tablet",
+            "generic_name": "Amoxicillin (500mg) + Potassium Clavulanate (125mg)",
+            "category_name": "Antibiotics & Antimicrobials",
+            "supplier_index": 3,  # Mankind Pharma
+            "batch_number": "MOX-99412",
+            "expiry_date": today + timedelta(days=290),
+            "unit_price": Decimal("198.00"),
+            "cost_price": Decimal("145.00"),
+            "stock_quantity": 0,  # ⚠️ Out of stock to test alternative suggestion!
+            "reorder_level": 15,
         }
     ]
 

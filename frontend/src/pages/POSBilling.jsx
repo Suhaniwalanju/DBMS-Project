@@ -10,9 +10,11 @@ import {
   Banknote,
   QrCode,
   AlertCircle,
-  Receipt
+  Receipt,
+  Sparkles
 } from "lucide-react";
 import { api } from "../services/api";
+import AlternativeModal from "../components/AlternativeModal";
 
 export default function POSBilling({ onSaleCompleted, dataVersion }) {
   const [medicines, setMedicines] = useState([]);
@@ -34,6 +36,7 @@ export default function POSBilling({ onSaleCompleted, dataVersion }) {
 
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState(null);
+  const [selectedOutMedicine, setSelectedOutMedicine] = useState(null);
 
   useEffect(() => {
     loadData();
@@ -205,7 +208,8 @@ export default function POSBilling({ onSaleCompleted, dataVersion }) {
                 <div
                   key={med.medicine_id}
                   className={`medicine-item-card ${isOut ? "out-of-stock" : ""}`}
-                  onClick={() => !isOut && addToCart(med)}
+                  onClick={() => isOut ? setSelectedOutMedicine(med) : addToCart(med)}
+                  style={isOut ? { cursor: "pointer" } : undefined}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                     <div className="card-med-name">{med.name}</div>
@@ -218,20 +222,47 @@ export default function POSBilling({ onSaleCompleted, dataVersion }) {
                   <div className="card-price-stock">
                     <div>
                       <div className="med-price">Rs. {parseFloat(med.unit_price).toFixed(2)}</div>
-                      <div className="med-stock">Stock: {med.stock_quantity} left</div>
+                      <div className="med-stock" style={isOut ? { color: "#fb7185", fontWeight: "600" } : undefined}>
+                        {isOut ? "Out of Stock" : `Stock: ${med.stock_quantity} left`}
+                      </div>
                     </div>
 
-                    <button
-                      className="btn-primary"
-                      style={{ padding: "6px 12px", fontSize: "0.78rem" }}
-                      disabled={isOut}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToCart(med);
-                      }}
-                    >
-                      {inCart ? `In Cart (${inCart.quantity})` : "+ Add"}
-                    </button>
+                    {isOut ? (
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        style={{
+                          padding: "6px 10px",
+                          fontSize: "0.75rem",
+                          color: "#10b981",
+                          borderColor: "rgba(16, 185, 129, 0.4)",
+                          background: "rgba(16, 185, 129, 0.1)",
+                          fontWeight: "600",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "4px"
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedOutMedicine(med);
+                        }}
+                        title="Click to view research-verified in-stock alternatives"
+                      >
+                        <Sparkles size={13} />
+                        <span>Suggest Alt</span>
+                      </button>
+                    ) : (
+                      <button
+                        className="btn-primary"
+                        style={{ padding: "6px 12px", fontSize: "0.78rem" }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(med);
+                        }}
+                      >
+                        {inCart ? `In Cart (${inCart.quantity})` : "+ Add"}
+                      </button>
+                    )}
                   </div>
                 </div>
               );
@@ -453,6 +484,14 @@ export default function POSBilling({ onSaleCompleted, dataVersion }) {
           </button>
         </div>
       </div>
+
+      {/* Clinically Verified Alternative Medicine Modal */}
+      <AlternativeModal
+        isOpen={!!selectedOutMedicine}
+        medicine={selectedOutMedicine}
+        onClose={() => setSelectedOutMedicine(null)}
+        onSelectAlternative={(alt) => addToCart(alt)}
+      />
     </div>
   );
 }

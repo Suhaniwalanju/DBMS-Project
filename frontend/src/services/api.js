@@ -41,6 +41,7 @@ export const api = {
   deleteMedicine: (id) => request(`/medicines/${id}`, { method: "DELETE" }),
   getLowStockAlerts: () => request("/medicines/alerts/low-stock"),
   getExpiringAlerts: (days = 60) => request(`/medicines/alerts/expiring-soon?days=${days}`),
+  getAlternatives: (id) => request(`/medicines/${id}/alternatives`),
 
   // Sales & POS
   getSales: (limit = 50) => request(`/sales?limit=${limit}`),
